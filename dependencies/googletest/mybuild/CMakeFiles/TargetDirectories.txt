@@ -1,0 +1,4 @@
+/home/sergiu.marginean/Downloads/Build Engineer test/build-engineer-test/CoolGame/dependencies/googletest/mybuild/CMakeFiles/rebuild_cache.dir
+/home/sergiu.marginean/Downloads/Build Engineer test/build-engineer-test/CoolGame/dependencies/googletest/mybuild/CMakeFiles/edit_cache.dir
+/home/sergiu.marginean/Downloads/Build Engineer test/build-engineer-test/CoolGame/dependencies/googletest/mybuild/CMakeFiles/gtest_main.dir
+/home/sergiu.marginean/Downloads/Build Engineer test/build-engineer-test/CoolGame/dependencies/googletest/mybuild/CMakeFiles/gtest.dir
