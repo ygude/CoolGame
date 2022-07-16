@@ -11,6 +11,6 @@ TEST(GameObjectTest, CreateObject)
 TEST(GameObjectTest, FailTest)
 {
 	std::cout << "Hello World" << std::endl;
-	ASSERT_EQ(true, true);
+	ASSERT_EQ(false, true);
 }
 
