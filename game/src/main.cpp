@@ -8,7 +8,6 @@ int main(int argc, char** argv)
     std::cout << "Hello World" << std::endl;
     
     CoolGame::Game game;
-    cbmsxcb
     game.addGameObject("Object 1");
     game.addGameObject("Object 2");
     
