@@ -7,7 +7,7 @@ pipeline {
                 cleanWs()
             	dir("CoolGame"){
             	sh "echo credentials: ${CREDENTIALS_ID}"
-                checkout([$class: 'GitSCM', branches: [[name: '${BRANCH}']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${CREDENTIALS_ID}", url: 'git@github.com:ygude/${REPO}.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '${BRANCH}']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${CREDENTIALS_ID}", url: '${PROJECT_REPO}.git']]])
             }
            }
         }
