@@ -8,7 +8,6 @@ pipeline {
             	dir("CoolGame"){
             	sh "echo credentials: ${CREDENTIALS_ID}"
                 checkout([$class: 'GitSCM', branches: [[name: '${BRANCH}']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${CREDENTIALS_ID}", url: 'git@github.com:ygude/${REPO}.git']]])
-                sh "ls -lart ./*"
             }
            }
         }
@@ -20,6 +19,12 @@ pipeline {
 				cmake -Bbuild -DCMAKE_BUILD_TYPE=Release
 				cd build
 				make
+				if [ $? -eq 0 ]
+				then
+				   echo "Compiled Successful!"
+				else
+				   echo "Compilation failed!"
+				fi
 	    		'''
 	    		}
 	    	}
