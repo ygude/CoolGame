@@ -32,19 +32,22 @@ pipeline {
     	
     	stage("Tests"){
     		steps {
-	    		dir("CoolGame"){
-	    		sh '''
-				cd build/game/src/test
-				./CoolGame_tst
-				
-				if [ $? -eq 0 ]
-				then
-				   echo "All Tests are Passed"
-				else
-				   echo "Looks like test(s) failed"
-				fi
-	    		'''
-	    		}
+    			script {
+		    		dir("CoolGame"){
+		    		try {
+		    		sh '''
+					cd build/game/src/test
+					./CoolGame_tst
+					echo "Tests are Passed!"
+				'''   		
+	    			}
+	    			catch(err)
+	    			{
+	    				sh 'echo "Test(s) failed"'
+	    				currentBuild.result = 'UNSTABLE'
+	    			}
+	    			}
+			}
 	    	}
     	}
     	
@@ -62,3 +65,4 @@ pipeline {
     	
     }
 }
+
