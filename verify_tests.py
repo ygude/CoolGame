@@ -8,4 +8,5 @@ if process1.returncode == 0:
     print("Tests are passed")
 else:
     print("Tests are failed......................!")
+    exit(1)
 
