@@ -14,6 +14,6 @@ if process1.returncode == 0:
     print("Tests are passed")
 else:
     print("Tests are failed......................!")
-    with open(err_log) as fd:
+    with open(err_log, 'w') as fd:
         fd.write(stderr.decode(encode='utf-8'))
 
