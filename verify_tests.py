@@ -13,7 +13,7 @@ if process1.returncode == 0:
     print(stdout.decode(encode='utf-8'))
     print("Tests are passed")
 else:
-    print("Tests are failed......................: {}".format(stderr))
+    print("Tests are failed......................: {}".format(stderr.decode('utf-8')))
     with open(err_log, 'w') as fd:
-        fd.write(stderr)
+        fd.write(stderr.decode('utf-8'))
 
