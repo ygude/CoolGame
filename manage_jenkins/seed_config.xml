@@ -1,0 +1,113 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.80">
+      <scriptText>pipelineJob(&quot;CoolGame&quot;){
+  Common.logRotator delegate
+  Common.coolGameParameters delegate
+  Common.scm delegate, &quot;coolGame.Jenkinsfile&quot;
+}
+
+
+
+class Common { 
+  //Parameters to CoolGame Jenkins job
+  static void coolGameParameters(context){
+    context.with{
+      parameters{
+        stringParam{
+          name(&quot;PROJECT_REPO&quot;)
+          defaultValue(&quot;git@github.com:ygude/CoolGame&quot;)
+          description(&quot;&quot;&quot;
+            	&lt;h5&gt;Provide GitHub repository name.&lt;/h5&gt;
+            &quot;&quot;&quot;
+          )
+          trim(true)
+        }
+        
+        stringParam{
+          name(&quot;BRANCH&quot;)
+          defaultValue(&quot;master&quot;)
+          description(&quot;&quot;&quot;
+          	&lt;h5&gt;Provide GitHub repository branch like master.&lt;/h5&gt;
+            &quot;&quot;&quot;
+          )
+          trim(true)
+        }
+        
+        credentialsParam(&apos;CREDENTIALS_ID&apos;) {
+            type(&apos;com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey&apos;)
+            required()
+            defaultValue(&apos;SSH_CREDS&apos;)
+            description(&quot;&quot;&quot;
+            	&lt;h5&gt;Provide SSH private key with username credentials Id.&lt;/h5&gt;
+            	&quot;&quot;&quot;
+            )
+        }
+      }
+    }
+  }
+  static void scm(context, jenkinsfile) {
+    context.with {
+      definition {
+        cpsScm {
+          scriptPath(jenkinsfile)
+          scm {
+            git {
+              remote {
+                credentials(&apos;$CREDENTIALS_ID&apos;)
+                url(&apos;$PROJECT_REPO&apos;)
+              }
+              branch(&apos;$BRANCH&apos;)
+              extensions {
+                cloneOptions {
+                  timeout(5)
+                  depth(1)
+                }
+                cleanBeforeCheckout()
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  static void logRotator(context){
+    context.with{
+      logRotator {
+        numToKeep(30)
+        daysToKeep(30)
+        artifactDaysToKeep(30)
+      }
+    }
+  }
+
+}</scriptText>
+      <usingScriptText>true</usingScriptText>
+      <sandbox>false</sandbox>
+      <ignoreExisting>false</ignoreExisting>
+      <ignoreMissingFiles>false</ignoreMissingFiles>
+      <failOnMissingPlugin>false</failOnMissingPlugin>
+      <failOnSeedCollision>false</failOnSeedCollision>
+      <unstableOnDeprecation>false</unstableOnDeprecation>
+      <removedJobAction>IGNORE</removedJobAction>
+      <removedViewAction>IGNORE</removedViewAction>
+      <removedConfigFilesAction>IGNORE</removedConfigFilesAction>
+      <lookupStrategy>JENKINS_ROOT</lookupStrategy>
+    </javaposse.jobdsl.plugin.ExecuteDslScripts>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>
