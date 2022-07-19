@@ -13,7 +13,16 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.80">
-      <scriptText>pipelineJob(&quot;CoolGame&quot;){
+      <scriptText>// Create a folder
+folder(&apos;Games&apos;) {
+    displayName(&apos;Games&apos;)
+    description(&apos;Folder for Game Projects&apos;)
+}
+
+
+// Create a Pipeline job
+pipelineJob(&quot;Games/CoolGame&quot;){
+  description(&apos;Hey this Pipeline job for CoolGame project. It contains stages for Checkout, Compile, Test &amp; Archive binaries.&apos;)
   Common.logRotator delegate
   Common.coolGameParameters delegate
   Common.scm delegate, &quot;coolGame.Jenkinsfile&quot;
@@ -46,9 +55,19 @@ class Common {
           trim(true)
         }
         
+        //stringParam{
+         // name(&quot;CREDENTIALS_ID&quot;)
+         // defaultValue(&quot;SSH_CREDS&quot;)
+         // description(&quot;&quot;&quot;
+         // 	&lt;h5&gt;Provide SSH private key with username credentials Id.&lt;/h5&gt;
+         //   &quot;&quot;&quot;
+        //  )
+        //  trim(true)
+        //}
+        
         credentialsParam(&apos;CREDENTIALS_ID&apos;) {
             type(&apos;com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey&apos;)
-            required()
+            required(true)
             defaultValue(&apos;SSH_CREDS&apos;)
             description(&quot;&quot;&quot;
             	&lt;h5&gt;Provide SSH private key with username credentials Id.&lt;/h5&gt;
