@@ -10,12 +10,12 @@ ENV CASC_JENKINS_CONFIG /var/jenkins_home/casc.yaml
 COPY --chown=jenkins:jenkins plugins.txt /usr/share/jenkins/ref/plugins.txt
 RUN jenkins-plugin-cli -f /usr/share/jenkins/ref/plugins.txt
 
-
 COPY casc.yaml /var/jenkins_home/casc.yaml
 COPY credentials.xml /var/jenkins_home/credentials.xml
 COPY secret.key /var/jenkins_home/secret.key
 COPY manage_jenkins.py /var/jenkins_home/manage_jenkins.py
-#sleep 30
+
+# Tried run python script but show how it didn't work but need to find away to run
 #CMD ["python3", "/var/jenkins_home/manage_jenkins.py"]
 #ENTRYPOINT ["python3", "/var/jenkins_home/manage_jenkins.py"]
 
