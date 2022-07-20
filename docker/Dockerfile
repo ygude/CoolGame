@@ -14,7 +14,11 @@ RUN jenkins-plugin-cli -f /usr/share/jenkins/ref/plugins.txt
 COPY casc.yaml /var/jenkins_home/casc.yaml
 COPY credentials.xml /var/jenkins_home/credentials.xml
 COPY secret.key /var/jenkins_home/secret.key
-COPY manage_seed.py /var/jenkins_home/manage_seed.py
+COPY manage_jenkins.py /var/jenkins_home/manage_jenkins.py
+#sleep 30
+#CMD ["python3", "/var/jenkins_home/manage_jenkins.py"]
+#ENTRYPOINT ["python3", "/var/jenkins_home/manage_jenkins.py"]
+
 
 
 
