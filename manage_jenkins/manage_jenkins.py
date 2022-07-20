@@ -1,3 +1,7 @@
+"""
+This script will create Seed job and trigger that seed job. After completion of the seed build job then 
+it will create CoolGame project pipeline under Games folder.
+"""
 import jenkins
 import argparse
 import xml.dom.minidom
@@ -21,14 +25,6 @@ else:
 
 version = server.get_version()
 print("Jenkins Server Version: {}".format(version))
-
-
-#res = server.get_job_config("auto_seed")
-#print("res: {}".format(type(res)))
-
-#with open("seed_config.xml", 'w') as fd:
-#    fd.write(res) 
-
 
 xmlObject = xml.dom.minidom.parse(seed_config_file) 
 pretty_xml_as_string = xmlObject.toprettyxml()
