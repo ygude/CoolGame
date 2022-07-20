@@ -1,7 +1,7 @@
 pipeline {
    agent {
         docker {
-            label 'dockerhost' // Add your docker label here
+            label '${AGENT_LABEL}' // Add your docker label here
             image 'yesubabugude/cool-node'
             args  '-v /jenkins/bin:/jenkins/bin -v /jenkins/.repoconfig:/.repoconfig -v /jenkins/.gitconfig:/jenkins/.gitconfig -v /jenkins/.ssh/config:/jenkins/.ssh/config:ro -v /jenkins/.ssh/known_hosts:/jenkins/.ssh/known_hosts -v /jenkins/.ssh/id_rsa:/jenkins/.ssh/id_rsa:ro'
         }
