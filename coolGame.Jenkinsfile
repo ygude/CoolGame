@@ -3,29 +3,35 @@ pipeline {
    stages {
         stage('Checkout') {
             steps {
-             // Clean before build
                 cleanWs()
             	dir("CoolGame"){
-            	sh "echo credentials: ${CREDENTIALS_ID}"
-                checkout([$class: 'GitSCM', branches: [[name: '${BRANCH}']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${CREDENTIALS_ID}", url: '${PROJECT_REPO}.git']]])
-            }
+					sh "echo credentials: ${CREDENTIALS_ID}"
+					checkout(
+						[$class: 'GitSCM', 
+						branches: [[name: '${BRANCH}']], 
+						doGenerateSubmoduleConfigurations: false, 
+						extensions: [], 
+						submoduleCfg: [], 
+						userRemoteConfigs: [[credentialsId: "${CREDENTIALS_ID}", url: '${PROJECT_REPO}.git']]]
+					)
+            	}
            }
         }
     	stage("Build"){
     		steps {
 	    		dir("CoolGame"){
-	    		sh '''
-				mkdir -p build
-				cmake -Bbuild -DCMAKE_BUILD_TYPE=Release
-				cd build
-				make
-				if [ $? -eq 0 ]
-				then
-				   echo "Compiled Successful!"
-				else
-				   echo "Compilation failed!"
-				fi
-	    		'''
+					sh '''
+						mkdir -p build
+						cmake -Bbuild -DCMAKE_BUILD_TYPE=Release
+						cd build
+						make
+						if [ $? -eq 0 ]
+						then
+						echo "Compiled Successful!"
+						else
+						echo "Compilation failed!"
+						fi
+					'''
 	    		}
 	    	}
     	}
@@ -34,20 +40,20 @@ pipeline {
     		steps {
     			script {
 		    		dir("CoolGame"){
-		    		try {
-		    		sh '''
-					cd build/game/src/test
-					./CoolGame_tst
-					echo "Tests are Passed!"
-				'''   		
+						try {
+						sh '''
+							cd build/game/src/test
+							./CoolGame_tst
+							echo "Tests are Passed!"
+						'''   		
+						}
+						catch(err)
+						{
+							sh 'echo "Test(s) failed"'
+							currentBuild.result = 'UNSTABLE'
+						}
 	    			}
-	    			catch(err)
-	    			{
-	    				sh 'echo "Test(s) failed"'
-	    				currentBuild.result = 'UNSTABLE'
-	    			}
-	    			}
-			}
+				}
 	    	}
     	}
     	
@@ -60,9 +66,6 @@ pipeline {
 	    			archiveArtifacts artifacts: 'CoolGame_run'
 	    		}
 	    	}
-    	}
-    	
-    	
+    	}    	
     }
 }
-
