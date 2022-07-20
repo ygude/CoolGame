@@ -5,8 +5,8 @@
 
 int main(int argc, char** argv)
 {
-    std::cout << "Hello World" << std::endl
-        sss
+    std::cout << "Hello World" << std::endl;
+     
     
     CoolGame::Game game;
     game.addGameObject("Object 1");
